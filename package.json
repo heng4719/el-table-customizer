@@ -1,0 +1,11 @@
+{
+  "name": "el-table-customizer",
+  "version": "1.0.4",
+  "description": "给用户提供了可以自定义修改elementUI表格的能力",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}
