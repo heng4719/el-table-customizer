@@ -23,3 +23,6 @@
 6. 文字大小
 7. 可以隐藏/显示某些列
 8. 本地保存修改后的列宽
+
+[![pSs2FaV.png](https://s1.ax1x.com/2023/02/03/pSs2FaV.png)](https://imgse.com/i/pSs2FaV)
+[![pSsgTKA.png](https://s1.ax1x.com/2023/02/03/pSsgTKA.png)](https://imgse.com/i/pSsgTKA)
