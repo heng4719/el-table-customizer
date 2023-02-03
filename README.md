@@ -1,5 +1,10 @@
 ## 使用说明
 给用户提供了可以自定义修改elementUI表格的能力，通过混入(mixins)使用，必须先安装element-ui。
+
+通过npm安装：
+```
+    npm i el-table-customizer
+```
 使用方法如下：
 
     <script>
