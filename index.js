@@ -8,6 +8,7 @@ export default {
       customizerTds:[], //td元素的二维数组
       customizerInterval: {}, //定时器
       customizerCount: 0, //循环等待次数
+      customizerMountedFinished: false
     }
   },
 
@@ -36,7 +37,7 @@ export default {
       this.customizerSaveTableDom()
       //重写表格拖拽方法
       this.customizerReplaceMyFun()
-      //读取配置数据（暂为localstorage）
+      //读取配置数据
       let config = this.customizerGetConfigs()
       
       if(config && config[`${window.location.pathname}`]){
@@ -48,6 +49,7 @@ export default {
       }
       //初始化表格配置侧栏
       this.customizerCreateConfigPage(this.customizerChangeStyleFunc)
+      this.customizerMountedFinished = true
     },
     customizerSaveTableDom(){
       let tables = [document.getElementsByClassName("el-table").item(0)]
@@ -375,7 +377,7 @@ export default {
           //发生了拖拽，记录当前样式
           setTimeout(() => {
             let config = this.customizerGetConfigs()
-            this.customizerSaveConfig(config, false, column.id, column.width)              
+            this.customizerSaveConfig(config, false, column.id, column.width)
           }, 500);
         }; 
 
@@ -1181,6 +1183,17 @@ export default {
       widthConfigs[`${window.location.pathname}`] = configList
       localStorage.setItem(`tableConfigs`, JSON.stringify(widthConfigs))
       return configList
+    }
+  },
+
+  updated(){
+    if(this.customizerMountedFinished){
+      let config = this.customizerGetConfigs()
+      if(config && config[`${window.location.pathname}`]){
+        this.customizerApplyConfig(config[`${window.location.pathname}`])
+      }else{
+        this.customizerSaveConfig(config, true)
+      }
     }
   }
 
