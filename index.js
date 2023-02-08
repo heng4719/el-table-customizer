@@ -6,14 +6,14 @@ export default {
       customizerTables:[], //table元素的二维数组
       customizerThs:[],//th元素的二维数组
       customizerTds:[], //td元素的二维数组
-      customizerInterval: {}, //
+      customizerInterval: {}, //定时器
       customizerCount: 0, //循环等待次数
     }
   },
 
   mounted() {
     //需要等待tableBody加载出来才能加载
-    setTimeout(() => {      
+    setTimeout(() => {
       let emptyBody = document.getElementsByClassName("el-table__empty-block")
       if(emptyBody.length > 0){
         this.customizerInterval = setInterval(() => {
@@ -38,6 +38,7 @@ export default {
       this.customizerReplaceMyFun()
       //读取配置数据（暂为localstorage）
       let config = this.customizerGetConfigs()
+      
       if(config && config[`${window.location.pathname}`]){
         //存在配置，则应用配置
         this.customizerApplyConfig(config[`${window.location.pathname}`])
@@ -66,7 +67,6 @@ export default {
             }else if(cols[i].nodeName == "TD"){
               tempTds.push(cols[i])
             }
-
           }
         }
         this.customizerThs.push(tempThs)
@@ -202,8 +202,9 @@ export default {
           })
 
           //隐藏因外边框而导致的滑动条
-          let tableBody = document.getElementsByClassName("el-table__body-wrapper")
-          tableBody.item(index).style.overflow = "hidden"
+          // let tableBody = document.getElementsByClassName("el-table__body-wrapper")
+          // tableBody.item(index).style.overflow = "hidden"
+
           if(config[index][colName].visib == "none"){
             this.customizerChangeColVisibState(tables[index].columns[i].id, false)
           }
@@ -285,7 +286,7 @@ export default {
           //if 新配置里面该列没有width参数，但是旧配置里面有，则从旧配置里面保存到新配置里面
           for(let k = 0; k < tableConfigList.length; k++){
             for(let key in tableConfigList[k]){
-              if(!tableConfigList[k][key].width && oldConfig[k][key].width){
+              if(!tableConfigList[k][key].width && oldConfig && oldConfig[k][key].width){
                 tableConfigList[k][key].width = oldConfig[k][key].width
               }
             }
@@ -451,7 +452,7 @@ export default {
         }
   
         that.bodyWidth = Math.max(bodyMinWidth, bodyWidth);
-        that.table.resizeState.width = that.bodyWidth;
+        // that.table.resizeState.width = that.bodyWidth; //注释掉了这里，不然会导致表头表体错位问题
       } else {
         flattenColumns.forEach((column) => {
           if (!column.width && !column.minWidth) {
@@ -560,6 +561,7 @@ export default {
           }
         });
         this.customizerChangeColVisibState(checkedClass, event.target.checked)
+        // tables.item(event.target.tabIndex).layout.updateColumnsWidth()
       }
       //保存
       setTimeout(() => {
